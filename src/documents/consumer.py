@@ -172,7 +172,8 @@ class ConsumerPlugin(
         if existing_doc.exists():
             msg = ConsumerStatusShortMessage.DOCUMENT_ALREADY_EXISTS
             mypath = os.path.relpath(
-                self.input_doc.original_file, settings.CONSUMPTION_DIR
+                self.input_doc.original_file,
+                settings.CONSUMPTION_DIR,
             )
 
             log_msg = f"Not consuming {mypath}: It is a duplicate of {existing_doc.get().title} (#{existing_doc.get().pk})."
