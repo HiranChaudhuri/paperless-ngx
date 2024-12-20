@@ -892,10 +892,13 @@ class TestConsumer(
         dst = self.get_test_file()
         self.assertIsFile(dst)
 
+        # we are consuming somewhere outside of the consume folder, now expect
+        # the result message to reflect that
+
         with self.get_consumer(dst) as consumer:
             with self.assertRaisesRegex(
                 ConsumerError,
-                r"sample\.pdf: Not consuming sample\.pdf: It is a duplicate of sample \(#\d+\)",
+                r"sample\.pdf: Not consuming .*sample\.pdf: It is a duplicate of sample \(#\d+\)",
             ):
                 consumer.run()
 
