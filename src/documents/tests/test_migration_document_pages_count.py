@@ -11,6 +11,9 @@ def source_path_before(self):
     if self.filename:
         fname = str(self.filename)
 
+    # ensure directory exists
+    Path(settings.ORIGINALS_DIR).mkdir(parents=True, exist_ok=True)
+
     return os.path.join(settings.ORIGINALS_DIR, fname)
 
 
