@@ -59,7 +59,7 @@ class WorkflowTriggerPlugin(
 
     def run(self) -> str | None:
         """
-        Get overrides from matching workflows
+        Get overrides from matching workflows.
         """
         overrides, msg = run_workflows(
             WorkflowTrigger.WorkflowTriggerType.CONSUMPTION,
