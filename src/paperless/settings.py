@@ -341,9 +341,9 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.AcceptHeaderVersioning",
-    "DEFAULT_VERSION": "7",
+    "DEFAULT_VERSION": "1",
     # Make sure these are ordered and that the most recent version appears
-    # last. See api.md#api-versioning when adding new versions.
+    # last
     "ALLOWED_VERSIONS": ["1", "2", "3", "4", "5", "6", "7"],
 }
 
@@ -744,12 +744,17 @@ USE_TZ = True
 # Logging                                                                     #
 ###############################################################################
 
+
 setup_logging_queues()
 
 LOGGING_DIR.mkdir(parents=True, exist_ok=True)
 
 LOGROTATE_MAX_SIZE = os.getenv("PAPERLESS_LOGROTATE_MAX_SIZE", 1024 * 1024)
 LOGROTATE_MAX_BACKUPS = os.getenv("PAPERLESS_LOGROTATE_MAX_BACKUPS", 20)
+LOGLEVEL = os.getenv("PAPERLESS_LOGLEVEL", default="INFO")
+
+if not LOGLEVEL in ["DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"]:
+  raise ValueError('PAPERLESS_LOGLEVEL must be one of [DEBUG, INFO, WARN, ERROR, CRITICAL]')
 
 LOGGING = {
     "version": 1,
@@ -792,13 +797,15 @@ LOGGING = {
             "backupCount": LOGROTATE_MAX_BACKUPS,
         },
     },
-    "root": {"handlers": ["console"]},
+    "root": {"handlers": ["console"], "level": LOGLEVEL},
     "loggers": {
-        "paperless": {"handlers": ["file_paperless"], "level": "DEBUG"},
-        "paperless_mail": {"handlers": ["file_mail"], "level": "DEBUG"},
-        "ocrmypdf": {"handlers": ["file_paperless"], "level": "INFO"},
-        "celery": {"handlers": ["file_celery"], "level": "DEBUG"},
-        "kombu": {"handlers": ["file_celery"], "level": "DEBUG"},
+        "paperless": {"handlers": ["file_paperless"], "level": LOGLEVEL},
+        "paperless_mail": {"handlers": ["file_mail"], "level": LOGLEVEL},
+        "ocrmypdf": {"handlers": ["file_paperless"], "level": LOGLEVEL},
+        "celery": {"handlers": ["file_celery"], "level": LOGLEVEL},
+        "kombu": {"handlers": ["file_celery"], "level": LOGLEVEL},
+        'httpx': {'handlers': ['console'],'level': LOGLEVEL,},
+        'httpcore': {'handlers': ['console'],'level': LOGLEVEL,},
     },
 }
 

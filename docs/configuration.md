@@ -298,6 +298,13 @@ Defaults to `/usr/share/nltk_data`
 
 ## Logging
 
+#### [`PAPERLESS_LOGLEVEL=<value>`](#PAPERLESS_LOGLEVEL) {#PAPERLESS_LOGLEVEL}
+
+: Log level used by paperless. Must be one of [DEBUG, INFO, WARN, ERROR, CRITICAL]. 
+Be aware DEBUG can be very verbose, so use it only when needed.
+
+    Defaults to INFO.
+
 #### [`PAPERLESS_LOGROTATE_MAX_SIZE=<num>`](#PAPERLESS_LOGROTATE_MAX_SIZE) {#PAPERLESS_LOGROTATE_MAX_SIZE}
 
 : Maximum file size for log files before they are rotated, in bytes.
